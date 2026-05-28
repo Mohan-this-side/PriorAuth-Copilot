@@ -1,14 +1,68 @@
 import { CalendarDays, FileText, Pencil, UserRound } from "lucide-react";
 
-const clinicalSummary = [
-  "Diagnosis: COPD",
-  "Symptoms: dyspnea on exertion, chronic cough",
-  "Current management: inhaled bronchodilator and rescue inhaler",
-  "Former smoker; quit in 2018",
-  "Evaluation requested for home oxygen therapy due to hypoxemia",
-];
+type Patient = {
+  displayName: string;
+  age: number;
+  dataNote: string;
+  conditions: string[];
+  careContext: string;
+};
 
-export function PatientIntake() {
+type Order = {
+  service: string;
+  serviceCategory: string;
+  date: string;
+  orderingRole: string;
+  requestReason: string;
+};
+
+type Observation = {
+  id: string;
+  label: string;
+  value: string;
+  context: string;
+};
+
+type Encounter = {
+  id: string;
+  noteSummary: string;
+};
+
+type CoverageRecord = {
+  id: string;
+  type: string;
+  planLabel?: string;
+  coverageStatus?: string;
+};
+
+type PatientIntakeProps = {
+  patient: Patient;
+  order: Order;
+  observations: Observation[];
+  encounters: Encounter[];
+  coverageRecords: CoverageRecord[];
+};
+
+export function PatientIntake({
+  coverageRecords,
+  encounters,
+  observations,
+  order,
+  patient,
+}: PatientIntakeProps) {
+  const primaryObservation = observations[0];
+  const primaryEncounter = encounters[0];
+  const primaryCoverage = coverageRecords.find((record) => record.type === "coverage");
+  const clinicalSummary = [
+    `Diagnosis context: ${patient.conditions.join(", ")}`,
+    patient.careContext,
+    primaryObservation
+      ? `${primaryObservation.label}: ${primaryObservation.value} (${primaryObservation.id})`
+      : "Oxygen saturation evidence missing",
+    primaryEncounter ? primaryEncounter.noteSummary : "Recent encounter note missing",
+    order.requestReason,
+  ];
+
   return (
     <section className="panel panel-tall" id="step-1">
       <div className="panel-header">
@@ -16,7 +70,7 @@ export function PatientIntake() {
           <span className="section-step">1</span>
           <h2>Patient / Order Intake</h2>
         </div>
-        <button className="text-button">
+        <button className="text-button" type="button">
           <Pencil size={15} aria-hidden="true" />
           Edit
         </button>
@@ -27,35 +81,37 @@ export function PatientIntake() {
           <UserRound size={28} aria-hidden="true" />
         </div>
         <div>
-          <h3>Synthetic Patient A</h3>
-          <p>68 years old · Demo record · No PHI</p>
+          <h3>{patient.displayName}</h3>
+          <p>
+            {patient.age} years old · {patient.dataNote}
+          </p>
         </div>
       </div>
 
       <dl className="detail-grid">
         <div>
           <dt>Order / Service</dt>
-          <dd>Home Oxygen Therapy</dd>
+          <dd>{order.service}</dd>
         </div>
         <div>
-          <dt>Place of Service</dt>
-          <dd>Home</dd>
+          <dt>Category</dt>
+          <dd>{order.serviceCategory}</dd>
         </div>
         <div>
-          <dt>Ordering Provider</dt>
-          <dd>Demo Provider</dd>
+          <dt>Ordering Role</dt>
+          <dd>{order.orderingRole}</dd>
         </div>
         <div>
-          <dt>Payer</dt>
-          <dd>Demo Health Plan</dd>
+          <dt>Payer Context</dt>
+          <dd>{primaryCoverage?.planLabel ?? "Synthetic plan context"}</dd>
         </div>
         <div>
           <dt>Date of Order</dt>
-          <dd>May 12, 2026</dd>
+          <dd>{order.date}</dd>
         </div>
         <div>
-          <dt>Requested Start</dt>
-          <dd>May 15, 2026</dd>
+          <dt>Coverage Status</dt>
+          <dd>{primaryCoverage?.coverageStatus ?? "Synthetic coverage available"}</dd>
         </div>
       </dl>
 
@@ -71,11 +127,11 @@ export function PatientIntake() {
       <div className="attachment-row" aria-label="Synthetic attachments">
         <span>
           <FileText size={16} aria-hidden="true" />
-          Progress_Note.pdf
+          Encounter_{primaryEncounter?.id ?? "missing"}.json
         </span>
         <span>
           <CalendarDays size={16} aria-hidden="true" />
-          Oximetry_Report.pdf
+          Oximetry_{primaryObservation?.id ?? "missing"}.json
         </span>
       </div>
     </section>

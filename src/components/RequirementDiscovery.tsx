@@ -1,57 +1,35 @@
-import { AlertTriangle, CheckCircle2, CircleMinus, RefreshCw } from "lucide-react";
+import { AlertTriangle, CheckCircle2, RefreshCw, Sparkles } from "lucide-react";
+import type { DemoStage, LearnedDenialPattern, RequirementEvidence } from "../lib/demoWorkflow";
 
-const requirements = [
-  {
-    name: "COPD diagnosis",
-    status: "Likely Met",
-    evidence: "Problem list",
-    source: "enc-001",
-  },
-  {
-    name: "Recent oxygen saturation result",
-    status: "Likely Met",
-    evidence: "Oximetry 86%",
-    source: "obs-001",
-  },
-  {
-    name: "Recent encounter note",
-    status: "Likely Met",
-    evidence: "Pulmonary visit",
-    source: "enc-002",
-  },
-  {
-    name: "Signed equipment order",
-    status: "Missing",
-    evidence: "Needs upload",
-    source: "-",
-  },
-  {
-    name: "Coverage / EOB context",
-    status: "Likely Met",
-    evidence: "Demo EOB",
-    source: "eob-001",
-  },
-  {
-    name: "No concurrent hospice care",
-    status: "Not Applicable",
-    evidence: "Not required",
-    source: "-",
-  },
-];
+type RequirementDiscoveryProps = {
+  demoStage: DemoStage;
+  evidenceRows: RequirementEvidence[];
+  foundCount: number;
+  learnedPattern?: LearnedDenialPattern;
+  missingCount: number;
+  onRunChecklist: () => void;
+  totalCount: number;
+};
 
-function StatusIcon({ status }: { status: string }) {
-  if (status === "Missing") {
+function StatusIcon({ status }: { status: RequirementEvidence["status"] }) {
+  if (status === "missing") {
     return <AlertTriangle className="status-warn" size={16} aria-hidden="true" />;
-  }
-
-  if (status === "Not Applicable") {
-    return <CircleMinus className="status-muted" size={16} aria-hidden="true" />;
   }
 
   return <CheckCircle2 className="status-good" size={16} aria-hidden="true" />;
 }
 
-export function RequirementDiscovery() {
+export function RequirementDiscovery({
+  demoStage,
+  evidenceRows,
+  foundCount,
+  learnedPattern,
+  missingCount,
+  onRunChecklist,
+  totalCount,
+}: RequirementDiscoveryProps) {
+  const canRunChecklist = demoStage === "second_review" && Boolean(learnedPattern);
+
   return (
     <section className="panel panel-wide" id="step-2">
       <div className="panel-header">
@@ -59,30 +37,49 @@ export function RequirementDiscovery() {
           <span className="section-step">2</span>
           <h2>Requirement Discovery</h2>
         </div>
-        <button className="secondary-button compact">
-          <RefreshCw size={15} aria-hidden="true" />
-          Re-run
-        </button>
+        {canRunChecklist ? (
+          <button className="primary-button compact" onClick={onRunChecklist} type="button">
+            <Sparkles size={15} aria-hidden="true" />
+            Run AuthAssist AI checklist
+          </button>
+        ) : (
+          <button className="secondary-button compact" type="button">
+            <RefreshCw size={15} aria-hidden="true" />
+            Evidence current
+          </button>
+        )}
       </div>
 
       <div className="status-summary">
         <div>
-          <strong>6</strong>
+          <strong>{totalCount}</strong>
           <span>Requirements</span>
         </div>
         <div className="summary-good">
-          <strong>4</strong>
+          <strong>{foundCount}</strong>
           <span>Likely met</span>
         </div>
         <div className="summary-warn">
-          <strong>1</strong>
+          <strong>{missingCount}</strong>
           <span>Missing</span>
         </div>
         <div>
-          <strong>1</strong>
-          <span>Not applicable</span>
+          <strong>{learnedPattern ? 1 : 0}</strong>
+          <span>Prior patterns</span>
         </div>
       </div>
+
+      {learnedPattern && demoStage !== "first_review" && demoStage !== "denied" ? (
+        <div className="pattern-banner">
+          <AlertTriangle size={18} aria-hidden="true" />
+          <div>
+            <strong>Prior denial pattern available</strong>
+            <span>
+              {learnedPattern.missingCriterion} previously caused a denial/delay for this service.
+            </span>
+          </div>
+        </div>
+      ) : null}
 
       <div className="table-wrap">
         <table>
@@ -95,13 +92,18 @@ export function RequirementDiscovery() {
             </tr>
           </thead>
           <tbody>
-            {requirements.map((requirement) => (
-              <tr key={requirement.name}>
-                <td>{requirement.name}</td>
+            {evidenceRows.map((requirement) => (
+              <tr key={requirement.requirement}>
+                <td>
+                  <span>{requirement.requirement}</span>
+                  {requirement.learnedPattern ? (
+                    <span className="inline-warning">Previously denied</span>
+                  ) : null}
+                </td>
                 <td>
                   <span className="status-cell">
                     <StatusIcon status={requirement.status} />
-                    {requirement.status}
+                    {requirement.status === "found" ? "Likely Met" : "Missing"}
                   </span>
                 </td>
                 <td>{requirement.evidence}</td>

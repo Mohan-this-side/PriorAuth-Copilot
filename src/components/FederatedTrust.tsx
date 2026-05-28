@@ -1,12 +1,10 @@
 import { LockKeyhole, TrendingDown, TrendingUp } from "lucide-react";
-
-const aggregatePatterns = [
-  ["Missing recent oxygen test", "High", "96% coverage when present"],
-  ["Missing diagnosis support", "High", "91% coverage when present"],
-  ["Missing signed order", "Medium", "Needs staff follow-up"],
-];
+import denialPatternsData from "../data/denial_patterns.json";
+import federatedSummaryData from "../data/federated_summary.json";
 
 export function FederatedTrust() {
+  const topPatterns = denialPatternsData.patterns.slice(0, 4);
+
   return (
     <section className="panel panel-tall" id="step-4">
       <div className="panel-header">
@@ -23,26 +21,28 @@ export function FederatedTrust() {
       <div className="trust-metrics">
         <div>
           <span>Sites</span>
-          <strong>3</strong>
+          <strong>{federatedSummaryData.aggregateCounts.clinicCount}</strong>
         </div>
         <div>
           <span>Cases simulated</span>
-          <strong>142</strong>
+          <strong>{federatedSummaryData.aggregateCounts.priorAuthCases}</strong>
         </div>
         <div>
-          <span>Completeness lift</span>
-          <strong>+18%</strong>
+          <span>Rows shared</span>
+          <strong>{federatedSummaryData.privacyExplanation.patientRowsShared}</strong>
         </div>
       </div>
 
       <div className="pattern-list">
-        {aggregatePatterns.map(([pattern, risk, note]) => (
-          <article key={pattern}>
+        {topPatterns.map((pattern) => (
+          <article key={pattern.patternId}>
             <div>
-              <h3>{pattern}</h3>
-              <p>{note}</p>
+              <h3>{pattern.requirement}</h3>
+              <p>{pattern.fixBeforeSubmitRecommendation}</p>
             </div>
-            <span className={risk === "High" ? "risk-high" : "risk-medium"}>{risk}</span>
+            <span className={pattern.riskLevel === "high" ? "risk-high" : "risk-medium"}>
+              {pattern.riskLevel}
+            </span>
           </article>
         ))}
       </div>
@@ -51,10 +51,7 @@ export function FederatedTrust() {
         <LockKeyhole size={18} aria-hidden="true" />
         <div>
           <h3>Privacy-preserving simulation</h3>
-          <p>
-            Clinics share aggregate denial patterns only. No patient-level rows or real PHI are
-            used in this demo.
-          </p>
+          <p>{federatedSummaryData.privacyExplanation.plainLanguage}</p>
         </div>
       </div>
 
@@ -65,7 +62,7 @@ export function FederatedTrust() {
         </span>
         <span>
           <TrendingDown size={16} aria-hidden="true" />
-          Manual review time
+          Repeat denial risk
         </span>
       </div>
     </section>
