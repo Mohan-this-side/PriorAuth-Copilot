@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-28",
+  "serviceFocus": "Home oxygen therapy",
+  "baselineDenialOrDelayRate": 0.313,
+  "patterns": [
+    {
+      "patternId": "pattern-001",
+      "featureId": "missing_recent_oxygen_saturation",
+      "requirement": "Missing recent oxygen saturation result",
+      "riskLevel": "high",
+      "aggregateAffectedCases": 24,
+      "deniedOrDelayedWhenPresent": 18,
+      "denialRateWhenPresent": 0.75,
+      "denialLiftVsBaseline": 2.3962,
+      "federatedImportance": 0.2535,
+      "evidenceTypesToCheck": [
+        "Observation",
+        "LOINC-like oxygen saturation code"
+      ],
+      "fixBeforeSubmitRecommendation": "Ask staff to attach a recent oxygen saturation observation before packet review.",
+      "safeWorkflowLanguage": "Review documentation before submission; do not alter codes or invent evidence."
+    },
+    {
+      "patternId": "pattern-002",
+      "featureId": "missing_copd_diagnosis_support",
+      "requirement": "Missing COPD diagnosis support",
+      "riskLevel": "high",
+      "aggregateAffectedCases": 12,
+      "deniedOrDelayedWhenPresent": 11,
+      "denialRateWhenPresent": 0.9167,
+      "denialLiftVsBaseline": 2.9288,
+      "federatedImportance": 0.1751,
+      "evidenceTypesToCheck": [
+        "Condition",
+        "Encounter diagnosis"
+      ],
+      "fixBeforeSubmitRecommendation": "Ask staff to verify the diagnosis evidence and source record before submission.",
+      "safeWorkflowLanguage": "Review documentation before submission; do not alter codes or invent evidence."
+    },
+    {
+      "patternId": "pattern-003",
+      "featureId": "missing_recent_encounter_note",
+      "requirement": "Missing recent encounter note",
+      "riskLevel": "medium",
+      "aggregateAffectedCases": 20,
+      "deniedOrDelayedWhenPresent": 14,
+      "denialRateWhenPresent": 0.7,
+      "denialLiftVsBaseline": 2.2364,
+      "federatedImportance": 0.1871,
+      "evidenceTypesToCheck": [
+        "Encounter",
+        "Clinical note"
+      ],
+      "fixBeforeSubmitRecommendation": "Ask staff to attach or cite the most recent relevant encounter note.",
+      "safeWorkflowLanguage": "Review documentation before submission; do not alter codes or invent evidence."
+    },
+    {
+      "patternId": "pattern-004",
+      "featureId": "missing_signed_equipment_order",
+      "requirement": "Missing signed equipment order",
+      "riskLevel": "medium",
+      "aggregateAffectedCases": 27,
+      "deniedOrDelayedWhenPresent": 16,
+      "denialRateWhenPresent": 0.5926,
+      "denialLiftVsBaseline": 1.8933,
+      "federatedImportance": 0.1824,
+      "evidenceTypesToCheck": [
+        "ServiceRequest",
+        "DeviceRequest"
+      ],
+      "fixBeforeSubmitRecommendation": "Route to human review for signed equipment order confirmation.",
+      "safeWorkflowLanguage": "Review documentation before submission; do not alter codes or invent evidence."
+    },
+    {
+      "patternId": "pattern-005",
+      "featureId": "stale_or_conflicting_documentation",
+      "requirement": "Stale or conflicting documentation",
+      "riskLevel": "medium",
+      "aggregateAffectedCases": 15,
+      "deniedOrDelayedWhenPresent": 9,
+      "denialRateWhenPresent": 0.6,
+      "denialLiftVsBaseline": 1.9169,
+      "federatedImportance": 0.104,
+      "evidenceTypesToCheck": [
+        "Observation",
+        "Encounter",
+        "Coverage"
+      ],
+      "fixBeforeSubmitRecommendation": "Ask staff to review date windows and resolve conflicting source records.",
+      "safeWorkflowLanguage": "Review documentation before submission; do not alter codes or invent evidence."
+    },
+    {
+      "patternId": "pattern-006",
+      "featureId": "missing_coverage_eob_context",
+      "requirement": "Missing coverage/EOB context",
+      "riskLevel": "low",
+      "aggregateAffectedCases": 19,
+      "deniedOrDelayedWhenPresent": 10,
+      "denialRateWhenPresent": 0.5263,
+      "denialLiftVsBaseline": 1.6815,
+      "federatedImportance": 0.0979,
+      "evidenceTypesToCheck": [
+        "Coverage",
+        "ExplanationOfBenefit"
+      ],
+      "fixBeforeSubmitRecommendation": "Ask staff to verify coverage and EOB context before final packet approval.",
+      "safeWorkflowLanguage": "Review documentation before submission; do not alter codes or invent evidence."
+    }
+  ]
+}
