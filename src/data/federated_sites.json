@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-05-28",
+  "simulationName": "AuthReady federated prior-authorization simulation",
+  "serviceFocus": "Home oxygen therapy documentation readiness",
+  "dataPolicy": {
+    "dataType": "synthetic aggregate data",
+    "patientLevelRowsShared": 0,
+    "phiIncluded": false,
+    "purpose": "Hackathon demo of privacy-preserving denial-pattern learning."
+  },
+  "sites": [
+    {
+      "id": "clinic-a",
+      "name": "Clinic A",
+      "setting": "Synthetic pulmonary practice",
+      "regionLabel": "Synthetic Northeast market",
+      "localCounts": {
+        "priorAuthCases": 42,
+        "deniedOrDelayedCases": 13,
+        "firstPassCompletePackets": 24,
+        "denialOrDelayRate": 0.3095,
+        "firstPassCompletenessRate": 0.5714
+      },
+      "localFeatureCounts": [
+        {
+          "featureId": "missing_recent_oxygen_saturation",
+          "label": "Missing recent oxygen saturation result",
+          "casesWithIssue": 8,
+          "deniedOrDelayedWithIssue": 6,
+          "localIssueRate": 0.1905,
+          "localDenialRateWhenPresent": 0.75
+        },
+        {
+          "featureId": "missing_copd_diagnosis_support",
+          "label": "Missing COPD diagnosis support",
+          "casesWithIssue": 4,
+          "deniedOrDelayedWithIssue": 4,
+          "localIssueRate": 0.0952,
+          "localDenialRateWhenPresent": 1.0
+        },
+        {
+          "featureId": "missing_signed_equipment_order",
+          "label": "Missing signed equipment order",
+          "casesWithIssue": 10,
+          "deniedOrDelayedWithIssue": 6,
+          "localIssueRate": 0.2381,
+          "localDenialRateWhenPresent": 0.6
+        },
+        {
+          "featureId": "missing_recent_encounter_note",
+          "label": "Missing recent encounter note",
+          "casesWithIssue": 7,
+          "deniedOrDelayedWithIssue": 5,
+          "localIssueRate": 0.1667,
+          "localDenialRateWhenPresent": 0.7143
+        },
+        {
+          "featureId": "missing_coverage_eob_context",
+          "label": "Missing coverage/EOB context",
+          "casesWithIssue": 6,
+          "deniedOrDelayedWithIssue": 3,
+          "localIssueRate": 0.1429,
+          "localDenialRateWhenPresent": 0.5
+        },
+        {
+          "featureId": "stale_or_conflicting_documentation",
+          "label": "Stale or conflicting documentation",
+          "casesWithIssue": 5,
+          "deniedOrDelayedWithIssue": 3,
+          "localIssueRate": 0.119,
+          "localDenialRateWhenPresent": 0.6
+        }
+      ],
+      "localModelExport": {
+        "exportType": "aggregate_counts_and_normalized_feature_weights",
+        "patientRowsShared": 0,
+        "sourceNotesShared": 0,
+        "fieldsShared": [
+          "site id",
+          "aggregate case counts",
+          "aggregate denial/delay counts",
+          "aggregate missing-documentation counts",
+          "normalized feature weights"
+        ]
+      }
+    },
+    {
+      "id": "clinic-b",
+      "name": "Clinic B",
+      "setting": "Synthetic primary care group",
+      "regionLabel": "Synthetic Midwest market",
+      "localCounts": {
+        "priorAuthCases": 38,
+        "deniedOrDelayedCases": 11,
+        "firstPassCompletePackets": 22,
+        "denialOrDelayRate": 0.2895,
+        "firstPassCompletenessRate": 0.5789
+      },
+      "localFeatureCounts": [
+        {
+          "featureId": "missing_recent_oxygen_saturation",
+          "label": "Missing recent oxygen saturation result",
+          "casesWithIssue": 7,
+          "deniedOrDelayedWithIssue": 5,
+          "localIssueRate": 0.1842,
+          "localDenialRateWhenPresent": 0.7143
+        },
+        {
+          "featureId": "missing_copd_diagnosis_support",
+          "label": "Missing COPD diagnosis support",
+          "casesWithIssue": 5,
+          "deniedOrDelayedWithIssue": 4,
+          "localIssueRate": 0.1316,
+          "localDenialRateWhenPresent": 0.8
+        },
+        {
+          "featureId": "missing_signed_equipment_order",
+          "label": "Missing signed equipment order",
+          "casesWithIssue": 9,
+          "deniedOrDelayedWithIssue": 5,
+          "localIssueRate": 0.2368,
+          "localDenialRateWhenPresent": 0.5556
+        },
+        {
+          "featureId": "missing_recent_encounter_note",
+          "label": "Missing recent encounter note",
+          "casesWithIssue": 6,
+          "deniedOrDelayedWithIssue": 4,
+          "localIssueRate": 0.1579,
+          "localDenialRateWhenPresent": 0.6667
+        },
+        {
+          "featureId": "missing_coverage_eob_context",
+          "label": "Missing coverage/EOB context",
+          "casesWithIssue": 8,
+          "deniedOrDelayedWithIssue": 4,
+          "localIssueRate": 0.2105,
+          "localDenialRateWhenPresent": 0.5
+        },
+        {
+          "featureId": "stale_or_conflicting_documentation",
+          "label": "Stale or conflicting documentation",
+          "casesWithIssue": 4,
+          "deniedOrDelayedWithIssue": 2,
+          "localIssueRate": 0.1053,
+          "localDenialRateWhenPresent": 0.5
+        }
+      ],
+      "localModelExport": {
+        "exportType": "aggregate_counts_and_normalized_feature_weights",
+        "patientRowsShared": 0,
+        "sourceNotesShared": 0,
+        "fieldsShared": [
+          "site id",
+          "aggregate case counts",
+          "aggregate denial/delay counts",
+          "aggregate missing-documentation counts",
+          "normalized feature weights"
+        ]
+      }
+    },
+    {
+      "id": "clinic-c",
+      "name": "Clinic C",
+      "setting": "Synthetic DME coordination team",
+      "regionLabel": "Synthetic Southeast market",
+      "localCounts": {
+        "priorAuthCases": 35,
+        "deniedOrDelayedCases": 12,
+        "firstPassCompletePackets": 18,
+        "denialOrDelayRate": 0.3429,
+        "firstPassCompletenessRate": 0.5143
+      },
+      "localFeatureCounts": [
+        {
+          "featureId": "missing_recent_oxygen_saturation",
+          "label": "Missing recent oxygen saturation result",
+          "casesWithIssue": 9,
+          "deniedOrDelayedWithIssue": 7,
+          "localIssueRate": 0.2571,
+          "localDenialRateWhenPresent": 0.7778
+        },
+        {
+          "featureId": "missing_copd_diagnosis_support",
+          "label": "Missing COPD diagnosis support",
+          "casesWithIssue": 3,
+          "deniedOrDelayedWithIssue": 3,
+          "localIssueRate": 0.0857,
+          "localDenialRateWhenPresent": 1.0
+        },
+        {
+          "featureId": "missing_signed_equipment_order",
+          "label": "Missing signed equipment order",
+          "casesWithIssue": 8,
+          "deniedOrDelayedWithIssue": 5,
+          "localIssueRate": 0.2286,
+          "localDenialRateWhenPresent": 0.625
+        },
+        {
+          "featureId": "missing_recent_encounter_note",
+          "label": "Missing recent encounter note",
+          "casesWithIssue": 7,
+          "deniedOrDelayedWithIssue": 5,
+          "localIssueRate": 0.2,
+          "localDenialRateWhenPresent": 0.7143
+        },
+        {
+          "featureId": "missing_coverage_eob_context",
+          "label": "Missing coverage/EOB context",
+          "casesWithIssue": 5,
+          "deniedOrDelayedWithIssue": 3,
+          "localIssueRate": 0.1429,
+          "localDenialRateWhenPresent": 0.6
+        },
+        {
+          "featureId": "stale_or_conflicting_documentation",
+          "label": "Stale or conflicting documentation",
+          "casesWithIssue": 6,
+          "deniedOrDelayedWithIssue": 4,
+          "localIssueRate": 0.1714,
+          "localDenialRateWhenPresent": 0.6667
+        }
+      ],
+      "localModelExport": {
+        "exportType": "aggregate_counts_and_normalized_feature_weights",
+        "patientRowsShared": 0,
+        "sourceNotesShared": 0,
+        "fieldsShared": [
+          "site id",
+          "aggregate case counts",
+          "aggregate denial/delay counts",
+          "aggregate missing-documentation counts",
+          "normalized feature weights"
+        ]
+      }
+    }
+  ]
+}
