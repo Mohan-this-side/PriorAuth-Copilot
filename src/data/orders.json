@@ -1,0 +1,81 @@
+[
+  {
+    "id": "order-001",
+    "patientId": "patient-001",
+    "type": "order",
+    "date": "2026-05-12",
+    "sourceLabel": "Synthetic home oxygen order draft",
+    "service": "Home oxygen therapy",
+    "serviceCategory": "Durable medical equipment",
+    "status": "draft_for_prior_auth_review",
+    "orderingRole": "Pulmonary clinician",
+    "requestReason": "Evaluate home oxygen support for synthetic COPD patient after low oxygen saturation was documented.",
+    "requiresPriorAuth": true,
+    "requiredEvidence": [
+      "COPD diagnosis",
+      "Recent oxygen saturation result",
+      "Recent encounter note",
+      "Signed equipment order",
+      "Coverage/EOB context"
+    ],
+    "knownMissingEvidence": [
+      "Signed equipment order"
+    ],
+    "humanReviewRequired": true,
+    "safetyNote": "Draft order is for documentation review only and is not submitted automatically."
+  },
+  {
+    "id": "order-002",
+    "patientId": "patient-002",
+    "type": "order",
+    "date": "2026-05-12",
+    "sourceLabel": "Synthetic home oxygen order draft",
+    "service": "Home oxygen therapy",
+    "serviceCategory": "Durable medical equipment",
+    "status": "documentation_incomplete",
+    "orderingRole": "Primary care clinician",
+    "requestReason": "Evaluate home oxygen support, but recent oxygen and visit documentation are not available in the synthetic chart.",
+    "requiresPriorAuth": true,
+    "requiredEvidence": [
+      "COPD diagnosis",
+      "Recent oxygen saturation result",
+      "Recent encounter note",
+      "Signed equipment order",
+      "Coverage/EOB context"
+    ],
+    "knownMissingEvidence": [
+      "Recent oxygen saturation result",
+      "Recent encounter note",
+      "Signed equipment order"
+    ],
+    "humanReviewRequired": true,
+    "safetyNote": "Missing evidence must stay missing until a human attaches source documentation."
+  },
+  {
+    "id": "order-003",
+    "patientId": "patient-003",
+    "type": "order",
+    "date": "2026-05-12",
+    "sourceLabel": "Synthetic unsupported oxygen request example",
+    "service": "Home oxygen therapy",
+    "serviceCategory": "Durable medical equipment",
+    "status": "not_supported_by_available_record",
+    "orderingRole": "Care coordination example",
+    "requestReason": "Comparison case used to show AuthReady does not fabricate evidence when COPD support is absent.",
+    "requiresPriorAuth": true,
+    "requiredEvidence": [
+      "COPD diagnosis",
+      "Recent oxygen saturation result",
+      "Recent encounter note",
+      "Signed equipment order",
+      "Coverage/EOB context"
+    ],
+    "knownMissingEvidence": [
+      "COPD diagnosis",
+      "Recent oxygen saturation result supporting oxygen need",
+      "Signed equipment order"
+    ],
+    "humanReviewRequired": true,
+    "safetyNote": "Available synthetic records do not support the requested oxygen packet."
+  }
+]

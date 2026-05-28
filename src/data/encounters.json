@@ -1,0 +1,96 @@
+[
+  {
+    "id": "enc-001",
+    "patientId": "patient-001",
+    "type": "encounter",
+    "date": "2026-05-10",
+    "sourceLabel": "Synthetic pulmonary follow-up note",
+    "encounterType": "Pulmonary follow-up",
+    "diagnosisLabels": [
+      "COPD"
+    ],
+    "diagnosisCodes": [
+      {
+        "codeSystem": "ICD-10-like",
+        "code": "J44.9",
+        "label": "COPD, unspecified"
+      }
+    ],
+    "noteSummary": "Synthetic note documents COPD history, increased exertional dyspnea, low room-air oxygen saturation, and plan to review home oxygen documentation.",
+    "supportsRequirements": [
+      "COPD diagnosis",
+      "Recent encounter note"
+    ],
+    "humanReviewFlag": "Clinician or staff must review before any prior-auth submission."
+  },
+  {
+    "id": "enc-002",
+    "patientId": "patient-001",
+    "type": "encounter",
+    "date": "2026-05-03",
+    "sourceLabel": "Synthetic care coordination note",
+    "encounterType": "Care coordination",
+    "diagnosisLabels": [
+      "COPD"
+    ],
+    "diagnosisCodes": [
+      {
+        "codeSystem": "ICD-10-like",
+        "code": "J44.9",
+        "label": "COPD, unspecified"
+      }
+    ],
+    "noteSummary": "Synthetic care coordinator note says DME paperwork may be needed if oxygen therapy is ordered.",
+    "supportsRequirements": [
+      "COPD diagnosis",
+      "Coverage/EOB context"
+    ],
+    "humanReviewFlag": "Administrative note only; not a clinical decision."
+  },
+  {
+    "id": "enc-003",
+    "patientId": "patient-002",
+    "type": "encounter",
+    "date": "2025-12-02",
+    "sourceLabel": "Synthetic stale respiratory visit note",
+    "encounterType": "Primary care visit",
+    "diagnosisLabels": [
+      "Chronic bronchitis history"
+    ],
+    "diagnosisCodes": [
+      {
+        "codeSystem": "ICD-10-like",
+        "code": "J42",
+        "label": "Chronic bronchitis, unspecified"
+      }
+    ],
+    "noteSummary": "Synthetic older note mentions cough and chronic bronchitis history, but no recent oxygen assessment or current home oxygen documentation.",
+    "supportsRequirements": [
+      "Possible respiratory history"
+    ],
+    "humanReviewFlag": "Should be treated as stale for current prior-auth readiness."
+  },
+  {
+    "id": "enc-004",
+    "patientId": "patient-003",
+    "type": "encounter",
+    "date": "2026-05-08",
+    "sourceLabel": "Synthetic allergy visit note",
+    "encounterType": "Primary care visit",
+    "diagnosisLabels": [
+      "Seasonal allergies"
+    ],
+    "diagnosisCodes": [
+      {
+        "codeSystem": "ICD-10-like",
+        "code": "J30.2",
+        "label": "Other seasonal allergic rhinitis"
+      }
+    ],
+    "noteSummary": "Synthetic note documents allergy symptoms and normal oxygen saturation; no COPD diagnosis or home oxygen support is present.",
+    "supportsRequirements": [
+      "Recent encounter note"
+    ],
+    "humanReviewFlag": "Comparison record should not be used to justify home oxygen."
+  }
+]

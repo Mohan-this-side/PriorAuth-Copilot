@@ -1,0 +1,80 @@
+[
+  {
+    "id": "cov-001",
+    "patientId": "patient-001",
+    "type": "coverage",
+    "date": "2026-05-01",
+    "sourceLabel": "Synthetic coverage record",
+    "planLabel": "Synthetic Medicare Advantage-like plan",
+    "coverageStatus": "active",
+    "serviceCategory": "Durable medical equipment",
+    "priorAuthLikely": true,
+    "supportsRequirement": "Coverage/EOB context",
+    "notes": "Synthetic coverage record used only to demonstrate prior-auth workflow context."
+  },
+  {
+    "id": "eob-001",
+    "patientId": "patient-001",
+    "type": "explanationOfBenefit",
+    "date": "2026-04-20",
+    "sourceLabel": "Synthetic EOB-style record",
+    "claimCategory": "DME",
+    "serviceLabel": "Nebulizer supply review",
+    "claimOutcome": "paid",
+    "denialReason": null,
+    "supportsRequirement": "Coverage/EOB context",
+    "notes": "Shows patient-001 has synthetic DME-related coverage history; not real payer data."
+  },
+  {
+    "id": "cov-002",
+    "patientId": "patient-002",
+    "type": "coverage",
+    "date": "2026-05-01",
+    "sourceLabel": "Synthetic coverage record",
+    "planLabel": "Synthetic Medicare Advantage-like plan",
+    "coverageStatus": "active",
+    "serviceCategory": "Durable medical equipment",
+    "priorAuthLikely": true,
+    "supportsRequirement": "Coverage/EOB context",
+    "notes": "Coverage exists, but clinical evidence is incomplete."
+  },
+  {
+    "id": "eob-002",
+    "patientId": "patient-002",
+    "type": "explanationOfBenefit",
+    "date": "2026-02-14",
+    "sourceLabel": "Synthetic EOB-style record",
+    "claimCategory": "Office visit",
+    "serviceLabel": "Respiratory symptoms follow-up",
+    "claimOutcome": "delayed",
+    "denialReason": "Missing current documentation in synthetic example",
+    "supportsRequirement": "Coverage/EOB context",
+    "notes": "Synthetic example for demonstrating missing-documentation risk."
+  },
+  {
+    "id": "cov-003",
+    "patientId": "patient-003",
+    "type": "coverage",
+    "date": "2026-05-01",
+    "sourceLabel": "Synthetic coverage record",
+    "planLabel": "Synthetic Medicare Advantage-like plan",
+    "coverageStatus": "active",
+    "serviceCategory": "Durable medical equipment",
+    "priorAuthLikely": true,
+    "supportsRequirement": "Coverage/EOB context",
+    "notes": "Coverage exists, but available clinical records do not support a COPD oxygen packet."
+  },
+  {
+    "id": "eob-003",
+    "patientId": "patient-003",
+    "type": "explanationOfBenefit",
+    "date": "2026-03-22",
+    "sourceLabel": "Synthetic EOB-style record",
+    "claimCategory": "Primary care",
+    "serviceLabel": "Routine allergy visit",
+    "claimOutcome": "paid",
+    "denialReason": null,
+    "supportsRequirement": "Coverage/EOB context",
+    "notes": "Comparison EOB with no respiratory DME support."
+  }
+]
