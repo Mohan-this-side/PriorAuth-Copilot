@@ -1,4 +1,7 @@
-import { CalendarDays, FileText, Pencil, UserRound } from "lucide-react";
+import CalendarDays from "lucide-react/dist/esm/icons/calendar-days.js";
+import FileText from "lucide-react/dist/esm/icons/file-text.js";
+import Pencil from "lucide-react/dist/esm/icons/pencil.js";
+import UserRound from "lucide-react/dist/esm/icons/user-round.js";
 
 const clinicalSummary = [
   "Diagnosis: COPD",
@@ -16,7 +19,7 @@ export function PatientIntake() {
           <span className="section-step">1</span>
           <h2>Patient / Order Intake</h2>
         </div>
-        <button className="text-button">
+        <button className="text-button" type="button">
           <Pencil size={15} aria-hidden="true" />
           Edit
         </button>

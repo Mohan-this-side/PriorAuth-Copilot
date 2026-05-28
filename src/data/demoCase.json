@@ -1,0 +1,77 @@
+{
+  "patient": {
+    "id": "patient-001",
+    "type": "patient",
+    "displayName": "Synthetic Patient A",
+    "age": 68,
+    "conditions": ["COPD"],
+    "dataNote": "Synthetic demo record, no PHI",
+    "sourceLabel": "Synthetic patient record"
+  },
+  "order": {
+    "id": "order-001",
+    "patientId": "patient-001",
+    "type": "order",
+    "service": "Home Oxygen Therapy",
+    "date": "2026-05-12",
+    "status": "draft",
+    "signed": false,
+    "orderingProvider": "Demo Provider",
+    "sourceLabel": "Synthetic home oxygen order"
+  },
+  "requirement": {
+    "id": "req-oxygen-001",
+    "type": "requirement",
+    "service": "Home Oxygen Therapy",
+    "requiresPriorAuth": true,
+    "requiredEvidence": [
+      "COPD diagnosis",
+      "Recent oxygen saturation result",
+      "Recent encounter note",
+      "Signed equipment order",
+      "Coverage/EOB context"
+    ],
+    "sourceLabel": "Synthetic coverage requirement"
+  },
+  "observations": [
+    {
+      "id": "obs-001",
+      "patientId": "patient-001",
+      "type": "observation",
+      "label": "Oxygen saturation",
+      "codeSystem": "LOINC-like",
+      "code": "59408-5",
+      "value": "86",
+      "unit": "%",
+      "date": "2026-05-10",
+      "interpretation": "Low oxygen saturation",
+      "sourceLabel": "Synthetic oximetry observation"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc-001",
+      "patientId": "patient-001",
+      "type": "encounter",
+      "label": "Pulmonary follow-up visit",
+      "date": "2026-05-09",
+      "diagnoses": ["COPD"],
+      "note": "Synthetic progress note documents COPD, dyspnea on exertion, chronic cough, and evaluation for home oxygen therapy.",
+      "sourceLabel": "Synthetic pulmonary encounter"
+    }
+  ],
+  "coverageEob": [
+    {
+      "id": "eob-001",
+      "patientId": "patient-001",
+      "type": "coverage_eob",
+      "payer": "Demo Health Plan",
+      "plan": "Synthetic PPO",
+      "service": "Home Oxygen Therapy",
+      "date": "2026-05-11",
+      "coverageStatus": "Prior authorization required",
+      "summary": "Synthetic EOB-style context confirms prior authorization workflow for home oxygen therapy.",
+      "sourceLabel": "Synthetic coverage/EOB context"
+    }
+  ]
+}

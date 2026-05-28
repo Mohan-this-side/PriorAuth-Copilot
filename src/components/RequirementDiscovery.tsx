@@ -1,57 +1,34 @@
-import { AlertTriangle, CheckCircle2, CircleMinus, RefreshCw } from "lucide-react";
+import AlertTriangle from "lucide-react/dist/esm/icons/alert-triangle.js";
+import CheckCircle2 from "lucide-react/dist/esm/icons/check-circle-2.js";
+import RefreshCw from "lucide-react/dist/esm/icons/refresh-cw.js";
+import type { PacketOutput } from "../lib/types";
 
-const requirements = [
-  {
-    name: "COPD diagnosis",
-    status: "Likely Met",
-    evidence: "Problem list",
-    source: "enc-001",
-  },
-  {
-    name: "Recent oxygen saturation result",
-    status: "Likely Met",
-    evidence: "Oximetry 86%",
-    source: "obs-001",
-  },
-  {
-    name: "Recent encounter note",
-    status: "Likely Met",
-    evidence: "Pulmonary visit",
-    source: "enc-002",
-  },
-  {
-    name: "Signed equipment order",
-    status: "Missing",
-    evidence: "Needs upload",
-    source: "-",
-  },
-  {
-    name: "Coverage / EOB context",
-    status: "Likely Met",
-    evidence: "Demo EOB",
-    source: "eob-001",
-  },
-  {
-    name: "No concurrent hospice care",
-    status: "Not Applicable",
-    evidence: "Not required",
-    source: "-",
-  },
-];
+type RequirementDiscoveryProps = {
+  packet: PacketOutput;
+  requirements: string[];
+};
 
 function StatusIcon({ status }: { status: string }) {
   if (status === "Missing") {
     return <AlertTriangle className="status-warn" size={16} aria-hidden="true" />;
   }
 
-  if (status === "Not Applicable") {
-    return <CircleMinus className="status-muted" size={16} aria-hidden="true" />;
-  }
-
   return <CheckCircle2 className="status-good" size={16} aria-hidden="true" />;
 }
 
-export function RequirementDiscovery() {
+export function RequirementDiscovery({ packet, requirements }: RequirementDiscoveryProps) {
+  const rows = requirements.map((requirement) => {
+    const found = packet.foundEvidence.find((evidence) => evidence.requirement === requirement);
+    const missing = packet.missingEvidence.find((evidence) => evidence.requirement === requirement);
+
+    return {
+      name: requirement,
+      status: found ? "Likely Met" : "Missing",
+      evidence: found?.summary ?? missing?.message ?? "Human review needed",
+      source: found?.sourceId ?? "-",
+    };
+  });
+
   return (
     <section className="panel panel-wide" id="step-2">
       <div className="panel-header">
@@ -59,7 +36,7 @@ export function RequirementDiscovery() {
           <span className="section-step">2</span>
           <h2>Requirement Discovery</h2>
         </div>
-        <button className="secondary-button compact">
+        <button className="secondary-button compact" type="button">
           <RefreshCw size={15} aria-hidden="true" />
           Re-run
         </button>
@@ -67,20 +44,20 @@ export function RequirementDiscovery() {
 
       <div className="status-summary">
         <div>
-          <strong>6</strong>
+          <strong>{rows.length}</strong>
           <span>Requirements</span>
         </div>
         <div className="summary-good">
-          <strong>4</strong>
+          <strong>{packet.foundEvidence.length}</strong>
           <span>Likely met</span>
         </div>
         <div className="summary-warn">
-          <strong>1</strong>
+          <strong>{packet.missingEvidence.length}</strong>
           <span>Missing</span>
         </div>
         <div>
-          <strong>1</strong>
-          <span>Not applicable</span>
+          <strong>{Math.round(packet.completenessScore * 100)}%</strong>
+          <span>Complete</span>
         </div>
       </div>
 
@@ -88,14 +65,14 @@ export function RequirementDiscovery() {
         <table>
           <thead>
             <tr>
-              <th>Requirement</th>
-              <th>Status</th>
-              <th>Evidence Match</th>
-              <th>Source</th>
+              <th scope="col">Requirement</th>
+              <th scope="col">Status</th>
+              <th scope="col">Evidence Match</th>
+              <th scope="col">Source</th>
             </tr>
           </thead>
           <tbody>
-            {requirements.map((requirement) => (
+            {rows.map((requirement) => (
               <tr key={requirement.name}>
                 <td>{requirement.name}</td>
                 <td>

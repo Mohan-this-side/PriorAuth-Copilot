@@ -1,4 +1,6 @@
-import { LockKeyhole, TrendingDown, TrendingUp } from "lucide-react";
+import LockKeyhole from "lucide-react/dist/esm/icons/lock-keyhole.js";
+import TrendingDown from "lucide-react/dist/esm/icons/trending-down.js";
+import TrendingUp from "lucide-react/dist/esm/icons/trending-up.js";
 
 const aggregatePatterns = [
   ["Missing recent oxygen test", "High", "96% coverage when present"],

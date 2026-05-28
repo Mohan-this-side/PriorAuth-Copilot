@@ -1,67 +1,83 @@
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Eye,
-  FileSearch,
-  Plus,
-  ShieldCheck,
-  Upload,
-} from "lucide-react";
+import AlertTriangle from "lucide-react/dist/esm/icons/alert-triangle.js";
+import CheckCircle2 from "lucide-react/dist/esm/icons/check-circle-2.js";
+import FileSearch from "lucide-react/dist/esm/icons/file-search.js";
+import Plus from "lucide-react/dist/esm/icons/plus.js";
+import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
+import Upload from "lucide-react/dist/esm/icons/upload.js";
+import { useEffect, useState } from "react";
+import type { PacketOutput } from "../lib/types";
 
-type EvidenceRow = {
-  requirement: string;
-  source: string;
-  summary: string;
-  state: "found" | "missing";
-  selected: boolean;
+type EvidencePacketProps = {
+  packet: PacketOutput;
 };
 
-const evidenceRows: EvidenceRow[] = [
-  {
-    requirement: "COPD diagnosis",
-    source: "enc-001",
-    summary: "COPD documented in synthetic encounter note.",
-    state: "found",
-    selected: true,
-  },
-  {
-    requirement: "Recent oxygen saturation",
-    source: "obs-001",
-    summary: "Oxygen saturation recorded as 86%.",
-    state: "found",
-    selected: true,
-  },
-  {
-    requirement: "Recent encounter note",
-    source: "enc-002",
-    summary: "Pulmonary visit supports equipment review.",
-    state: "found",
-    selected: true,
-  },
-  {
-    requirement: "Signed equipment order",
-    source: "-",
-    summary: "Missing from available synthetic records.",
-    state: "missing",
-    selected: false,
-  },
-  {
-    requirement: "Coverage / EOB context",
-    source: "eob-001",
-    summary: "Demo payer context available for review.",
-    state: "found",
-    selected: true,
-  },
-];
+export function EvidencePacket({ packet }: EvidencePacketProps) {
+  const [llmDraft, setLlmDraft] = useState(packet.packetDraftText);
+  const [llmMode, setLlmMode] = useState("deterministic-engine");
+  const [llmStatus, setLlmStatus] = useState<"loading" | "ready" | "error">("loading");
 
-const packetDraft = [
-  "Synthetic Patient A has a documented COPD diagnosis in source enc-001.",
-  "Recent oxygen saturation evidence is available in source obs-001.",
-  "Coverage context is available in source eob-001.",
-  "Signed equipment order is missing and requires human follow-up before submission.",
-];
+  const evidenceRows = [
+    ...packet.foundEvidence.map((evidence) => ({
+      requirement: evidence.requirement,
+      source: evidence.sourceId,
+      summary: evidence.summary,
+      state: "found" as const,
+      selected: true,
+    })),
+    ...packet.missingEvidence.map((evidence) => ({
+      requirement: evidence.requirement,
+      source: "-",
+      summary: evidence.message,
+      state: "missing" as const,
+      selected: false,
+    })),
+  ];
 
-export function EvidencePacket() {
+  useEffect(() => {
+    let isMounted = true;
+
+    const generateLlmDraft = async () => {
+      setLlmStatus("loading");
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/packet-draft", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ packet }),
+        });
+        const data = await response.json();
+
+        if (!response.ok && !data.draft) {
+          throw new Error(data.error ?? "Unable to generate packet draft.");
+        }
+
+        if (!isMounted) {
+          return;
+        }
+
+        setLlmDraft(data.draft);
+        setLlmMode(data.mode ?? "llm");
+        setLlmStatus(response.ok ? "ready" : "error");
+      } catch {
+        if (!isMounted) {
+          return;
+        }
+
+        setLlmDraft(packet.packetDraftText);
+        setLlmMode("deterministic-engine");
+        setLlmStatus("error");
+      }
+    };
+
+    generateLlmDraft();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [packet]);
+
   return (
     <section className="panel panel-wide" id="step-3">
       <div className="panel-header">
@@ -69,7 +85,7 @@ export function EvidencePacket() {
           <span className="section-step">3</span>
           <h2>Evidence Packet Builder</h2>
         </div>
-        <button className="secondary-button compact">
+        <button className="secondary-button compact" type="button">
           <Plus size={15} aria-hidden="true" />
           Add Evidence
         </button>
@@ -99,7 +115,7 @@ export function EvidencePacket() {
               {state === "found" ? (
                 <code>{source}</code>
               ) : (
-                <button className="secondary-button compact">
+                <button className="secondary-button compact" type="button">
                   <Upload size={14} aria-hidden="true" />
                   Upload
                 </button>
@@ -111,28 +127,26 @@ export function EvidencePacket() {
         <div className="packet-preview">
           <div className="preview-header">
             <div>
-              <h3>Packet Draft Preview</h3>
-              <p>Generated text must stay source-cited.</p>
+              <h3>LLM Packet Draft Preview</h3>
+              <p>Draft uses source-cited evidence and missing-evidence warnings.</p>
             </div>
-            <button className="icon-button" aria-label="Preview packet">
-              <Eye size={17} aria-hidden="true" />
-            </button>
+            <span className="llm-status" aria-live="polite">
+              {llmStatus === "loading" ? "Generating draft" : `Mode: ${llmMode}`}
+            </span>
           </div>
-          <ol>
-            {packetDraft.map((sentence) => (
-              <li key={sentence}>{sentence}</li>
-            ))}
-          </ol>
+          <pre className="llm-draft">{llmDraft}</pre>
           <div className="guardrail-note">
             <ShieldCheck size={17} aria-hidden="true" />
-            <span>Uncited AI claims: 0</span>
+            <span>
+              Mode: {llmMode}. Uncited AI claims allowed: {packet.uncitedClaims}
+            </span>
           </div>
           <div className="source-strip">
             <span>
               <FileSearch size={15} aria-hidden="true" />
-              4 sources cited
+              {packet.sourceCitations.length} sources cited
             </span>
-            <span>1 reviewer action</span>
+            <span>{packet.missingEvidence.length} reviewer action</span>
           </div>
         </div>
       </div>

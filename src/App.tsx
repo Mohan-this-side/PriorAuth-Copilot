@@ -1,30 +1,31 @@
-import {
-  AlertTriangle,
-  ArrowRight,
-  CheckCircle2,
-  ClipboardCheck,
-  Download,
-  FileCheck2,
-  FileText,
-  LockKeyhole,
-  Menu,
-  Network,
-  RefreshCw,
-  ShieldCheck,
-  Stethoscope,
-  UserRoundCheck,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import { useState } from "react";
+import { type KeyboardEvent, useMemo, useState } from "react";
 import { EvidencePacket } from "./components/EvidencePacket";
 import { FederatedTrust } from "./components/FederatedTrust";
 import { PatientIntake } from "./components/PatientIntake";
 import { RequirementDiscovery } from "./components/RequirementDiscovery";
+import demoCase from "./data/demoCase.json";
+import { evaluatePriorAuthEvidence } from "./lib/evidenceEngine";
+import type { EvidenceInput } from "./lib/types";
+import AlertTriangle from "lucide-react/dist/esm/icons/alert-triangle.js";
+import ArrowRight from "lucide-react/dist/esm/icons/arrow-right.js";
+import CheckCircle2 from "lucide-react/dist/esm/icons/check-circle-2.js";
+import ClipboardCheck from "lucide-react/dist/esm/icons/clipboard-check.js";
+import Download from "lucide-react/dist/esm/icons/download.js";
+import FileCheck2 from "lucide-react/dist/esm/icons/file-check-2.js";
+import FileText from "lucide-react/dist/esm/icons/file-text.js";
+import LockKeyhole from "lucide-react/dist/esm/icons/lock-keyhole.js";
+import Menu from "lucide-react/dist/esm/icons/menu.js";
+import Network from "lucide-react/dist/esm/icons/network.js";
+import RefreshCw from "lucide-react/dist/esm/icons/refresh-cw.js";
+import ShieldCheck from "lucide-react/dist/esm/icons/shield-check.js";
+import Stethoscope from "lucide-react/dist/esm/icons/stethoscope.js";
+import UserRoundCheck from "lucide-react/dist/esm/icons/user-round-check.js";
+import type { IconComponent } from "./types/icons";
 
 type WorkflowStep = {
   label: string;
   summary: string;
-  icon: LucideIcon;
+  icon: IconComponent;
 };
 
 const workflowSteps: WorkflowStep[] = [
@@ -59,8 +60,34 @@ const auditTrail = [
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
+  const [navOpen, setNavOpen] = useState(false);
   const [packetReviewed, setPacketReviewed] = useState(false);
   const activeStep = workflowSteps[activeTab];
+  const packet = useMemo(() => evaluatePriorAuthEvidence(demoCase as EvidenceInput), []);
+
+  const selectTab = (index: number) => {
+    setActiveTab(index);
+    setNavOpen(false);
+  };
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft" && event.key !== "Home" && event.key !== "End") {
+      return;
+    }
+
+    event.preventDefault();
+    const nextIndex =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? workflowSteps.length - 1
+          : event.key === "ArrowRight"
+            ? (index + 1) % workflowSteps.length
+            : (index - 1 + workflowSteps.length) % workflowSteps.length;
+
+    selectTab(nextIndex);
+    window.setTimeout(() => document.getElementById(`workflow-tab-${nextIndex}`)?.focus(), 0);
+  };
 
   const renderActiveWidget = () => {
     if (activeTab === 0) {
@@ -68,11 +95,11 @@ function App() {
     }
 
     if (activeTab === 1) {
-      return <RequirementDiscovery />;
+      return <RequirementDiscovery packet={packet} requirements={demoCase.requirement.requiredEvidence} />;
     }
 
     if (activeTab === 2) {
-      return <EvidencePacket />;
+      return <EvidencePacket packet={packet} />;
     }
 
     return <FederatedTrust />;
@@ -80,28 +107,41 @@ function App() {
 
   return (
     <div className="app-shell">
-      <aside className="sidebar" aria-label="Workflow navigation">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+
+      <aside className={navOpen ? "sidebar open" : "sidebar"} aria-label="Workflow navigation">
         <div className="brand-row">
           <div className="brand-mark">
             <ShieldCheck size={24} aria-hidden="true" />
           </div>
           <div>
-            <strong>AuthAssistent</strong>
+            <strong>AuthAssist AI</strong>
             <span>Evidence Copilot</span>
           </div>
         </div>
 
-        <nav className="workflow-nav" role="tablist" aria-label="Workflow sections">
+        <nav
+          className="workflow-nav"
+          id="workflow-navigation"
+          role="tablist"
+          aria-label="Workflow sections"
+        >
           {workflowSteps.map((step, index) => {
             const Icon = step.icon;
             return (
               <button
                 type="button"
+                aria-controls="active-workflow-panel"
                 aria-selected={activeTab === index}
                 className={activeTab === index ? "workflow-link active" : "workflow-link"}
+                id={`workflow-tab-${index}`}
                 key={step.label}
-                onClick={() => setActiveTab(index)}
+                onClick={() => selectTab(index)}
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
                 role="tab"
+                tabIndex={activeTab === index ? 0 : -1}
               >
                 <span className="step-number">{index + 1}</span>
                 <Icon size={18} aria-hidden="true" />
@@ -117,9 +157,16 @@ function App() {
         </div>
       </aside>
 
-      <main className="main-pane">
+      <main className="main-pane" id="main-content">
         <header className="topbar">
-          <button className="icon-button" aria-label="Open navigation">
+          <button
+            className="icon-button mobile-menu-button"
+            aria-controls="workflow-navigation"
+            aria-expanded={navOpen}
+            aria-label={navOpen ? "Close workflow navigation" : "Open workflow navigation"}
+            onClick={() => setNavOpen((open) => !open)}
+            type="button"
+          >
             <Menu size={20} aria-hidden="true" />
           </button>
           <div>
@@ -127,7 +174,10 @@ function App() {
             <p>Prior authorization packet for human review</p>
           </div>
           <div className="topbar-actions">
-            <span className={packetReviewed ? "review-status complete" : "review-status"}>
+            <span
+              aria-live="polite"
+              className={packetReviewed ? "review-status complete" : "review-status"}
+            >
               <UserRoundCheck size={16} aria-hidden="true" />
               {packetReviewed ? "Reviewed in Demo" : "Human Review Required"}
             </span>
@@ -141,11 +191,11 @@ function App() {
             <span>Owner Clinic Staff</span>
           </div>
           <div className="case-actions">
-            <button className="secondary-button compact">
+            <button className="secondary-button compact" type="button">
               <Download size={15} aria-hidden="true" />
               Export Packet
             </button>
-            <button className="secondary-button compact" onClick={() => setActiveTab(1)}>
+            <button className="secondary-button compact" onClick={() => selectTab(1)} type="button">
               <RefreshCw size={15} aria-hidden="true" />
               Re-run Evidence
             </button>
@@ -156,21 +206,21 @@ function App() {
           <div>
             <h2>Prepare a cited prior-auth packet in one guided pass.</h2>
             <p>
-              AuthAssistent checks synthetic patient and claims-style records, maps evidence to
+              AuthAssist AI checks synthetic patient and claims-style records, maps evidence to
               requirements, and keeps missing documentation visible before staff review.
             </p>
           </div>
           <div className="metric-strip">
             <div>
-              <strong>78%</strong>
+              <strong>{Math.round(packet.completenessScore * 100)}%</strong>
               <span>Completeness</span>
             </div>
             <div>
-              <strong>0</strong>
+              <strong>{packet.uncitedClaims}</strong>
               <span>Uncited claims</span>
             </div>
             <div>
-              <strong>2</strong>
+              <strong>{packet.missingEvidence.length}</strong>
               <span>Missing items</span>
             </div>
           </div>
@@ -186,16 +236,23 @@ function App() {
             <div className="workspace-progress" aria-label={`${activeTab + 1} of 4 workflow steps`}>
               {workflowSteps.map((step, index) => (
                 <button
-                  aria-label={step.label}
+                  aria-current={activeTab === index ? "step" : undefined}
+                  aria-label={`Go to step ${index + 1}: ${step.label}`}
                   className={activeTab === index ? "progress-dot active" : "progress-dot"}
                   key={step.label}
-                  onClick={() => setActiveTab(index)}
+                  onClick={() => selectTab(index)}
                   type="button"
                 />
               ))}
             </div>
           </div>
-          <div className="active-widget" role="tabpanel">
+          <div
+            aria-labelledby={`workflow-tab-${activeTab}`}
+            className="active-widget"
+            id="active-workflow-panel"
+            role="tabpanel"
+            tabIndex={0}
+          >
             {renderActiveWidget()}
           </div>
         </section>
@@ -226,9 +283,10 @@ function App() {
           <button
             className="primary-button"
             onClick={() => {
-              setActiveTab(2);
+              selectTab(2);
               setPacketReviewed(true);
             }}
+            type="button"
           >
             {packetReviewed ? "Reviewed" : "Review Packet"}
             <ArrowRight size={16} aria-hidden="true" />
@@ -244,9 +302,10 @@ function App() {
           <button
             className="ghost-button"
             onClick={() => {
-              setActiveTab(0);
+              selectTab(0);
               setPacketReviewed(false);
             }}
+            type="button"
           >
             <RefreshCw size={16} aria-hidden="true" />
             Reset Demo
