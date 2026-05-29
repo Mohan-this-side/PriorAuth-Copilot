@@ -3,8 +3,8 @@
     "id": "patient-001",
     "type": "patient",
     "date": "2026-05-28",
-    "sourceLabel": "Synthetic Synthea-style patient profile",
-    "displayName": "Synthetic Patient A",
+    "sourceLabel": "Demo Synthea-style patient profile",
+    "displayName": "Demo Patient A",
     "age": 68,
     "sex": "female",
     "primaryCondition": "COPD",
@@ -14,14 +14,14 @@
       "Former tobacco exposure"
     ],
     "careContext": "Pulmonary follow-up patient with worsening exertional shortness of breath.",
-    "dataNote": "Synthetic demo record, no PHI."
+    "dataNote": "Demo record, no PHI."
   },
   {
     "id": "patient-002",
     "type": "patient",
     "date": "2026-05-28",
-    "sourceLabel": "Synthetic Synthea-style patient profile",
-    "displayName": "Synthetic Patient B",
+    "sourceLabel": "Demo Synthea-style patient profile",
+    "displayName": "Demo Patient B",
     "age": 72,
     "sex": "male",
     "primaryCondition": "Chronic respiratory symptoms",
@@ -30,14 +30,14 @@
       "Diabetes"
     ],
     "careContext": "Patient has respiratory history, but current documentation is incomplete for home oxygen review.",
-    "dataNote": "Synthetic demo record, no PHI."
+    "dataNote": "Demo record, no PHI."
   },
   {
     "id": "patient-003",
     "type": "patient",
     "date": "2026-05-28",
-    "sourceLabel": "Synthetic Synthea-style patient profile",
-    "displayName": "Synthetic Patient C",
+    "sourceLabel": "Demo Synthea-style patient profile",
+    "displayName": "Demo Patient C",
     "age": 63,
     "sex": "female",
     "primaryCondition": "Seasonal allergies",
@@ -45,7 +45,7 @@
       "Seasonal allergies",
       "Hypertension"
     ],
-    "careContext": "Comparison case without clear COPD or oxygen-therapy support in available synthetic records.",
-    "dataNote": "Synthetic demo record, no PHI."
+    "careContext": "Comparison case without clear COPD or oxygen-therapy support in available demo records.",
+    "dataNote": "Demo record, no PHI."
   }
 ]

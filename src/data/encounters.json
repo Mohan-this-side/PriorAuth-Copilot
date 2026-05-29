@@ -4,7 +4,7 @@
     "patientId": "patient-001",
     "type": "encounter",
     "date": "2026-05-10",
-    "sourceLabel": "Synthetic pulmonary follow-up note",
+    "sourceLabel": "Demo pulmonary follow-up note",
     "encounterType": "Pulmonary follow-up",
     "diagnosisLabels": [
       "COPD"
@@ -16,7 +16,7 @@
         "label": "COPD, unspecified"
       }
     ],
-    "noteSummary": "Synthetic note documents COPD history, increased exertional dyspnea, low room-air oxygen saturation, and plan to review home oxygen documentation.",
+    "noteSummary": "Demo note documents COPD history, increased exertional dyspnea, low room-air oxygen saturation, and plan to review home oxygen documentation.",
     "supportsRequirements": [
       "COPD diagnosis",
       "Recent encounter note"
@@ -28,7 +28,7 @@
     "patientId": "patient-001",
     "type": "encounter",
     "date": "2026-05-03",
-    "sourceLabel": "Synthetic care coordination note",
+    "sourceLabel": "Demo care coordination note",
     "encounterType": "Care coordination",
     "diagnosisLabels": [
       "COPD"
@@ -40,7 +40,7 @@
         "label": "COPD, unspecified"
       }
     ],
-    "noteSummary": "Synthetic care coordinator note says DME paperwork may be needed if oxygen therapy is ordered.",
+    "noteSummary": "Demo care coordinator note says DME paperwork may be needed if oxygen therapy is ordered.",
     "supportsRequirements": [
       "COPD diagnosis",
       "Coverage/EOB context"
@@ -52,7 +52,7 @@
     "patientId": "patient-002",
     "type": "encounter",
     "date": "2025-12-02",
-    "sourceLabel": "Synthetic stale respiratory visit note",
+    "sourceLabel": "Demo stale respiratory visit note",
     "encounterType": "Primary care visit",
     "diagnosisLabels": [
       "Chronic bronchitis history"
@@ -64,7 +64,7 @@
         "label": "Chronic bronchitis, unspecified"
       }
     ],
-    "noteSummary": "Synthetic older note mentions cough and chronic bronchitis history, but no recent oxygen assessment or current home oxygen documentation.",
+    "noteSummary": "Demo older note mentions cough and chronic bronchitis history, but no recent oxygen assessment or current home oxygen documentation.",
     "supportsRequirements": [
       "Possible respiratory history"
     ],
@@ -75,7 +75,7 @@
     "patientId": "patient-003",
     "type": "encounter",
     "date": "2026-05-08",
-    "sourceLabel": "Synthetic allergy visit note",
+    "sourceLabel": "Demo allergy visit note",
     "encounterType": "Primary care visit",
     "diagnosisLabels": [
       "Seasonal allergies"
@@ -87,7 +87,7 @@
         "label": "Other seasonal allergic rhinitis"
       }
     ],
-    "noteSummary": "Synthetic note documents allergy symptoms and normal oxygen saturation; no COPD diagnosis or home oxygen support is present.",
+    "noteSummary": "Demo note documents allergy symptoms and normal oxygen saturation; no COPD diagnosis or home oxygen support is present.",
     "supportsRequirements": [
       "Recent encounter note"
     ],

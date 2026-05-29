@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0",
   "generatedAt": "2026-05-28",
-  "simulationName": "AuthReady federated prior-authorization simulation",
+  "simulationName": "AuthAssist AI federated prior-authorization simulation",
   "serviceFocus": "Home oxygen therapy documentation readiness",
   "dataPolicy": {
-    "dataType": "synthetic aggregate data",
+    "dataType": "demo aggregate data",
     "patientLevelRowsShared": 0,
     "phiIncluded": false,
     "purpose": "Hackathon demo of privacy-preserving denial-pattern learning."
@@ -13,8 +13,8 @@
     {
       "id": "clinic-a",
       "name": "Clinic A",
-      "setting": "Synthetic pulmonary practice",
-      "regionLabel": "Synthetic Northeast market",
+      "setting": "Demo pulmonary practice",
+      "regionLabel": "Demo Northeast market",
       "localCounts": {
         "priorAuthCases": 42,
         "deniedOrDelayedCases": 13,
@@ -88,8 +88,8 @@
     {
       "id": "clinic-b",
       "name": "Clinic B",
-      "setting": "Synthetic primary care group",
-      "regionLabel": "Synthetic Midwest market",
+      "setting": "Demo primary care group",
+      "regionLabel": "Demo Midwest market",
       "localCounts": {
         "priorAuthCases": 38,
         "deniedOrDelayedCases": 11,
@@ -163,8 +163,8 @@
     {
       "id": "clinic-c",
       "name": "Clinic C",
-      "setting": "Synthetic DME coordination team",
-      "regionLabel": "Synthetic Southeast market",
+      "setting": "Demo DME coordination team",
+      "regionLabel": "Demo Southeast market",
       "localCounts": {
         "priorAuthCases": 35,
         "deniedOrDelayedCases": 12,

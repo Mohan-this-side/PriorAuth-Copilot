@@ -48,7 +48,7 @@ export function EvidencePacket({
   totalCount,
 }: EvidencePacketProps) {
   const packetDraft = [
-    "Synthetic Patient A has a documented COPD diagnosis in sources enc-001 and enc-002.",
+    "Demo Patient A has a documented COPD diagnosis in sources enc-001 and enc-002.",
     "Recent oxygen saturation evidence is available in sources obs-001 and obs-002.",
     "Coverage context is available in sources cov-001 and eob-001.",
     missingCount === 0

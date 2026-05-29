@@ -45,7 +45,7 @@ type WorkflowStep = {
 const workflowSteps: WorkflowStep[] = [
   {
     label: "Patient / Order Intake",
-    summary: "Synthetic case profile, requested service, attachments, and clinical context.",
+    summary: "Demo case profile, requested service, attachments, and clinical context.",
     icon: Stethoscope,
   },
   {
@@ -77,7 +77,7 @@ const buildEvidenceRows = (
     status: "found",
     evidence: "COPD documented",
     source: "enc-001, enc-002",
-    summary: "COPD diagnosis appears in synthetic encounter and care coordination notes.",
+    summary: "COPD diagnosis appears in demo encounter and care coordination notes.",
     selected: true,
   },
   {
@@ -85,7 +85,7 @@ const buildEvidenceRows = (
     status: "found",
     evidence: "86% at rest",
     source: "obs-001, obs-002",
-    summary: "Recent oxygen saturation evidence is available from synthetic observation records.",
+    summary: "Recent oxygen saturation evidence is available from demo observation records.",
     selected: true,
   },
   {
@@ -93,7 +93,7 @@ const buildEvidenceRows = (
     status: "found",
     evidence: "Pulmonary visit",
     source: "enc-001",
-    summary: "Recent synthetic pulmonary follow-up note supports documentation review.",
+    summary: "Recent pulmonary follow-up note supports documentation review.",
     selected: true,
   },
   {
@@ -103,16 +103,16 @@ const buildEvidenceRows = (
     source: signedOrderAdded ? "upload-001" : "-",
     summary: signedOrderAdded
       ? "Signed DME order was added during the demo before human review."
-      : "Missing from available synthetic records. Human review needed.",
+      : "Missing from available demo records. Human review needed.",
     selected: signedOrderAdded,
     learnedPattern,
   },
   {
     requirement: "Coverage/EOB context",
     status: "found",
-    evidence: "Synthetic plan active",
+    evidence: "Demo plan active",
     source: "cov-001, eob-001",
-    summary: "Synthetic coverage and EOB-style context are available for review.",
+    summary: "Coverage and EOB-style context are available for review.",
     selected: true,
   },
 ];
@@ -148,7 +148,7 @@ function App() {
   const missingCount = evidenceRows.length - foundCount;
   const auditTrail = [
     "Coverage requirements loaded for home oxygen therapy",
-    "Synthetic chart records searched for required evidence",
+    "Demo chart records searched for required evidence",
     demoStage === "first_review"
       ? "Signed equipment order flagged for human review"
       : "Denial-pattern memory checked before repeat submission",
@@ -278,7 +278,7 @@ function App() {
 
         <div className="sidebar-footer">
           <LockKeyhole size={18} aria-hidden="true" />
-          <span>Synthetic demo data only</span>
+          <span>Demo records only</span>
         </div>
       </aside>
 
@@ -321,7 +321,7 @@ function App() {
           <div>
             <h2>Prevent repeated prior-auth denials before staff submit.</h2>
             <p>
-              AuthAssist AI checks synthetic patient and claims-style records, stores a simulated denial
+              AuthAssist AI checks demo patient and claims-style records, stores a simulated denial
               pattern, and warns staff when the same missing documentation appears again.
             </p>
           </div>
@@ -404,11 +404,6 @@ function App() {
         </section>
 
         <footer className="safety-footer">
-          <AlertTriangle size={16} aria-hidden="true" />
-          <span>
-            Demo guardrail: this prototype drafts review material only. It does not diagnose,
-            recommend treatment, approve coverage, or submit authorizations.
-          </span>
           <button className="ghost-button" onClick={resetDemo} type="button">
             <RefreshCw size={16} aria-hidden="true" />
             Reset Demo

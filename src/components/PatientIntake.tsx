@@ -103,7 +103,7 @@ export function PatientIntake({
         </div>
         <div>
           <dt>Payer Context</dt>
-          <dd>{primaryCoverage?.planLabel ?? "Synthetic plan context"}</dd>
+          <dd>{primaryCoverage?.planLabel ?? "Demo plan context"}</dd>
         </div>
         <div>
           <dt>Date of Order</dt>
@@ -111,7 +111,7 @@ export function PatientIntake({
         </div>
         <div>
           <dt>Coverage Status</dt>
-          <dd>{primaryCoverage?.coverageStatus ?? "Synthetic coverage available"}</dd>
+          <dd>{primaryCoverage?.coverageStatus ?? "Demo coverage available"}</dd>
         </div>
       </dl>
 
@@ -124,7 +124,7 @@ export function PatientIntake({
         </ul>
       </div>
 
-      <div className="attachment-row" aria-label="Synthetic attachments">
+      <div className="attachment-row" aria-label="Demo attachments">
         <span>
           <FileText size={16} aria-hidden="true" />
           Encounter_{primaryEncounter?.id ?? "missing"}.json

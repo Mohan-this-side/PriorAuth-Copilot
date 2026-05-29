@@ -36,7 +36,7 @@ export const DENIAL_PATTERN_STORAGE_KEY = "authassistai.denialPatterns";
 export const signedEquipmentOrderPattern: LearnedDenialPattern = {
   id: "learned-pattern-001",
   service: "Home oxygen therapy",
-  payerContext: "Synthetic Medicare Advantage-like plan",
+  payerContext: "Demo Medicare Advantage-like plan",
   missingCriterion: "Signed equipment order",
   denialReason: "Missing required DME order documentation",
   riskLevel: "medium",

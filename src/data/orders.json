@@ -4,12 +4,12 @@
     "patientId": "patient-001",
     "type": "order",
     "date": "2026-05-12",
-    "sourceLabel": "Synthetic home oxygen order draft",
+    "sourceLabel": "Demo home oxygen order draft",
     "service": "Home oxygen therapy",
     "serviceCategory": "Durable medical equipment",
     "status": "draft_for_prior_auth_review",
     "orderingRole": "Pulmonary clinician",
-    "requestReason": "Evaluate home oxygen support for synthetic COPD patient after low oxygen saturation was documented.",
+    "requestReason": "Evaluate home oxygen support for demo COPD patient after low oxygen saturation was documented.",
     "requiresPriorAuth": true,
     "requiredEvidence": [
       "COPD diagnosis",
@@ -29,12 +29,12 @@
     "patientId": "patient-002",
     "type": "order",
     "date": "2026-05-12",
-    "sourceLabel": "Synthetic home oxygen order draft",
+    "sourceLabel": "Demo home oxygen order draft",
     "service": "Home oxygen therapy",
     "serviceCategory": "Durable medical equipment",
     "status": "documentation_incomplete",
     "orderingRole": "Primary care clinician",
-    "requestReason": "Evaluate home oxygen support, but recent oxygen and visit documentation are not available in the synthetic chart.",
+    "requestReason": "Evaluate home oxygen support, but recent oxygen and visit documentation are not available in the demo chart.",
     "requiresPriorAuth": true,
     "requiredEvidence": [
       "COPD diagnosis",
@@ -56,12 +56,12 @@
     "patientId": "patient-003",
     "type": "order",
     "date": "2026-05-12",
-    "sourceLabel": "Synthetic unsupported oxygen request example",
+    "sourceLabel": "Demo unsupported oxygen request example",
     "service": "Home oxygen therapy",
     "serviceCategory": "Durable medical equipment",
     "status": "not_supported_by_available_record",
     "orderingRole": "Care coordination example",
-    "requestReason": "Comparison case used to show AuthReady does not fabricate evidence when COPD support is absent.",
+    "requestReason": "Comparison case used to show AuthAssist AI does not fabricate evidence when COPD support is absent.",
     "requiresPriorAuth": true,
     "requiredEvidence": [
       "COPD diagnosis",
@@ -76,6 +76,6 @@
       "Signed equipment order"
     ],
     "humanReviewRequired": true,
-    "safetyNote": "Available synthetic records do not support the requested oxygen packet."
+    "safetyNote": "Available demo records do not support the requested oxygen packet."
   }
 ]

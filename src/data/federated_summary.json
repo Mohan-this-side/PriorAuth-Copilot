@@ -3,7 +3,7 @@
   "generatedAt": "2026-05-28",
   "title": "Federated prior-authorization readiness simulation",
   "frontendReady": true,
-  "demoNarrative": "Three synthetic clinics learn prior-auth delay patterns locally. AuthReady aggregates only summary weights and counts, then uses those patterns to warn staff about missing evidence before packet review.",
+  "demoNarrative": "Three demo clinics learn prior-auth delay patterns locally. AuthAssist AI aggregates only summary weights and counts, then uses those patterns to warn staff about missing evidence before packet review.",
   "aggregateCounts": {
     "clinicCount": 3,
     "priorAuthCases": 115,
@@ -16,7 +16,7 @@
     {
       "siteId": "clinic-a",
       "name": "Clinic A",
-      "setting": "Synthetic pulmonary practice",
+      "setting": "Demo pulmonary practice",
       "priorAuthCases": 42,
       "deniedOrDelayedCases": 13,
       "firstPassCompletenessRate": 0.5714,
@@ -25,7 +25,7 @@
     {
       "siteId": "clinic-b",
       "name": "Clinic B",
-      "setting": "Synthetic primary care group",
+      "setting": "Demo primary care group",
       "priorAuthCases": 38,
       "deniedOrDelayedCases": 11,
       "firstPassCompletenessRate": 0.5789,
@@ -34,7 +34,7 @@
     {
       "siteId": "clinic-c",
       "name": "Clinic C",
-      "setting": "Synthetic DME coordination team",
+      "setting": "Demo DME coordination team",
       "priorAuthCases": 35,
       "deniedOrDelayedCases": 12,
       "firstPassCompletenessRate": 0.5143,
@@ -162,7 +162,7 @@
     }
   ],
   "privacyExplanation": {
-    "plainLanguage": "Each clinic keeps its synthetic patient rows locally. The demo only shares aggregate counts and normalized feature weights, so the central view can learn common missing-documentation patterns without receiving patient records.",
+    "plainLanguage": "Each clinic keeps its patient rows locally. The demo only shares aggregate counts and normalized feature weights, so the central view can learn common missing-documentation patterns without receiving patient records.",
     "whatStaysLocal": [
       "patient-level records",
       "encounter notes",
@@ -182,7 +182,7 @@
   "successMetrics": {
     "firstPassPacketCompleteness": {
       "label": "First-pass packet completeness",
-      "baselineSyntheticRate": 0.5565,
+      "baselineDemoRate": 0.5565,
       "demoPacketRate": 0.889,
       "demoPacketDetail": "8 of 9 required evidence items found and cited.",
       "whyItMatters": "A more complete packet is less likely to be delayed for missing documentation."
@@ -202,10 +202,10 @@
     "estimatedManualReviewTimeSaved": {
       "label": "Estimated staff time saved per packet",
       "demoEstimateMinutes": 18,
-      "assumption": "Synthetic demo assumption comparing manual chart search to a pre-built evidence checklist."
+      "assumption": "Demo assumption comparing manual chart search to a pre-built evidence checklist."
     }
   },
-  "humanReviewReminder": "AuthReady flags evidence gaps and drafts review text; a human must approve before submission.",
+  "humanReviewReminder": "AuthAssist AI flags evidence gaps and drafts review text; a human must approve before submission.",
   "safetyBoundaries": [
     "No autonomous clinical decision-making.",
     "No automatic prior-authorization submission.",
